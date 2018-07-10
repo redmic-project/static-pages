@@ -1,0 +1,80 @@
+var configBox = {
+	"domain": "redmic.net",
+	"pathResources": "resources/",
+	"items": [{
+		"subDomain": "appdev",
+		"img": "redmic.png",
+		"title": "REDMIC",
+		"description": "Versión de desarrollo de REDMIC (Repositorio de Datos Marinos Integrados de Canarias)"
+	},{
+		"subDomain": "git",
+		"img": "gitlab.png",
+		"title": "GitLab",
+		"description": "Gestor de repositorios de desarrollo"
+	},{
+		"subDomain": "pgadmin",
+		"img": "pgadmin.png",
+		"title": "pgAdmin",
+		"description": "Administrador para bases de datos de PostgreSQL"
+	},{
+		"subDomain": "portainer",
+		"img": "portainer.png",
+		"title": "Portainer",
+		"description": "Gestor de dockers"
+	},{
+		"subDomain": "webmail",
+		"img": "rainloop.png",
+		"title": "Email",
+		"description": "Correo"
+	},{
+		"subDomain": "postfixadmin",
+		"img": "postfixadmin.png",
+		"title": "Postfix Admin",
+		"description": "Gestor de cuentas de correo"
+	},{
+		"subDomain": "spam",
+		"img": "rspamd.png",
+		"title": "RSpamd",
+		"description": "Gestor de spam"
+	},{
+		"subDomain": "minio",
+		"img": "minio.svg",
+		"title": "Minio",
+		"description": "Alamacenamieto de cache"
+	},{
+		"subDomain": "artifactory",
+		"img": "artifactory.png",
+		"title": "Artifactory",
+		"description": "Repositorio de artefactos universal"
+	},{
+		"subDomain": "kafkatopicsui",
+		"img": "kafka.png",
+		"title": "Kafka Topics UI",
+		"description": "Topics (temas/canales de comunicación) presentes en los brokers de Kafka"
+	},{
+		"subDomain": "schemaregistryui",
+		"img": "avro.png",
+		"title": "Schema Registry UI",
+		"description": "Repositorio de esquemas con soporte Avro"
+	},{
+		"subDomain": "kafkaconnectui",
+		"img": "kafka-connect.png",
+		"title": "Kafka Connect UI",
+		"description": "Conectores registrados para topics de Kafka"
+	},{
+		"subDomain": "kafkamanager",
+		"img": "kafka-manager.png",
+		"title": "Kafka Manager",
+		"description": "Gestión avanzada de topics de Kafka"
+	},{
+		"subDomain": "prometheus",
+		"img": "prometheus.svg",
+		"title": "Prometheus",
+		"description": "Recolección de métricas"
+	},{
+		"subDomain": "grafana",
+		"img": "grafana.png",
+		"title": "Grafana",
+		"description": "Representación gráfica de métricas"
+	}]
+}
