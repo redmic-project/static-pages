@@ -1,6 +1,7 @@
 var configBox = {
 	"domain": "redmic.net",
 	"pathResources": "resources/",
+	"title": "Bienvenido a OAGdev",
 	"items": [{
 		"subDomain": "appdev",
 		"img": "redmic.png",

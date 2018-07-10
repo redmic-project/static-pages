@@ -64,7 +64,19 @@
 				return boxNode;
 			}
 
-			function createContent(item) {
+			function createTitle(item) {
+
+				var titleNode = document.getElementById("title"),
+					node = document.createElement("h1"),
+					content = document.createTextNode(configBox.title || '');
+
+				node.appendChild(content);
+				titleNode.appendChild(node);
+			}
+
+			function createContent() {
+
+				createTitle();
 
 				var items = configBox.items,
 					boxContainerNode = document.getElementById("boxContainer");
@@ -76,9 +88,7 @@
 		</script>
 	</head>
 	<body onload="createContent()">
-		<div class="page-title">
-			<h1>Bienvenido a OAGdev</h1>
-		</div>
+		<div class="page-title" id="title"></div>
 		<div class="box-container" id="boxContainer"></div>
 	</body>
 </html>
