@@ -1,79 +1,80 @@
-var configBox = {
+var config = {
 	"domain": "redmic.net",
-	"pathResources": "resources/",
+	"protocol": "https",
+	"resourcesPath": "resources/",
 	"title": "Bienvenido a OAGdev",
 	"items": [{
-		"subDomain": "appdev",
+		"subdomain": "appdev",
 		"img": "redmic.png",
 		"title": "REDMIC",
 		"description": "Versión de desarrollo de REDMIC (Repositorio de Datos Marinos Integrados de Canarias)"
 	},{
-		"subDomain": "git",
+		"subdomain": "git",
 		"img": "gitlab.png",
 		"title": "GitLab",
 		"description": "Gestor de repositorios de desarrollo"
 	},{
-		"subDomain": "pgadmin",
+		"subdomain": "pgadmin",
 		"img": "pgadmin.png",
 		"title": "pgAdmin",
 		"description": "Administrador para bases de datos de PostgreSQL"
 	},{
-		"subDomain": "portainer",
+		"subdomain": "portainer",
 		"img": "portainer.png",
 		"title": "Portainer",
 		"description": "Gestor de dockers"
 	},{
-		"subDomain": "webmail",
+		"subdomain": "webmail",
 		"img": "rainloop.png",
 		"title": "Email",
 		"description": "Correo"
 	},{
-		"subDomain": "postfixadmin",
+		"subdomain": "postfixadmin",
 		"img": "postfixadmin.png",
 		"title": "Postfix Admin",
 		"description": "Gestor de cuentas de correo"
 	},{
-		"subDomain": "spam",
+		"subdomain": "spam",
 		"img": "rspamd.png",
 		"title": "RSpamd",
 		"description": "Gestor de spam"
 	},{
-		"subDomain": "minio",
+		"subdomain": "minio",
 		"img": "minio.svg",
 		"title": "Minio",
 		"description": "Alamacenamieto de cache"
 	},{
-		"subDomain": "artifactory",
+		"subdomain": "artifactory",
 		"img": "artifactory.png",
 		"title": "Artifactory",
 		"description": "Repositorio de artefactos universal"
 	},{
-		"subDomain": "kafkatopicsui",
+		"subdomain": "kafkatopicsui",
 		"img": "kafka.png",
 		"title": "Kafka Topics UI",
 		"description": "Topics (temas/canales de comunicación) presentes en los brokers de Kafka"
 	},{
-		"subDomain": "schemaregistryui",
+		"subdomain": "schemaregistryui",
 		"img": "avro.png",
 		"title": "Schema Registry UI",
 		"description": "Repositorio de esquemas con soporte Avro"
 	},{
-		"subDomain": "kafkaconnectui",
+		"subdomain": "kafkaconnectui",
 		"img": "kafka-connect.png",
 		"title": "Kafka Connect UI",
 		"description": "Conectores registrados para topics de Kafka"
 	},{
-		"subDomain": "kafkamanager",
+		"subdomain": "kafkamanager",
 		"img": "kafka-manager.png",
 		"title": "Kafka Manager",
 		"description": "Gestión avanzada de topics de Kafka"
 	},{
-		"subDomain": "prometheus",
+		"subdomain": "prometheus",
 		"img": "prometheus.svg",
 		"title": "Prometheus",
 		"description": "Recolección de métricas"
 	},{
-		"subDomain": "grafana",
+		"subdomain": "grafana",
 		"img": "grafana.png",
 		"title": "Grafana",
 		"description": "Representación gráfica de métricas"

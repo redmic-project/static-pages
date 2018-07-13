@@ -1,93 +1,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>
-			OAGdev
-		</title>
 		<link rel="stylesheet" href="resources/index.css" type="text/css">
 		<script type="text/javascript" language="javascript" src="config.json"></script>
-		<script type="text/javascript">
-
-			function createItemTitle(item) {
-
-				var node = document.createElement("div"),
-					img = document.createElement("img");
-
-				node.setAttribute('class', 'box-title');
-
-				img.setAttribute('src', configBox.pathResources + item.img);
-				node.appendChild(img);
-
-				return node;
-			}
-
-			function createItemContent(item) {
-
-				var node = document.createElement("div"),
-					h2 = document.createElement("h2"),
-					h2Content = document.createTextNode(item.title || '');
-					p = document.createElement("p"),
-					pContent = document.createTextNode(item.description || '');
-
-				node.setAttribute('class', 'box-content');
-
-				h2.appendChild(h2Content);
-				node.appendChild(h2);
-
-				p.appendChild(pContent);
-				node.appendChild(p);
-
-				return node;
-			}
-
-			function hrefItem(item) {
-
-				if (item.subDomain) {
-					return 'https://' + item.subDomain + '.' + configBox.domain;
-				}
-
-				return item.href;
-			}
-
-			function createItemBox(item) {
-
-				var boxNode = document.createElement("a"),
-					titleNode = createItemTitle(item),
-					contentNode = createItemContent(item);
-
-				boxNode.setAttribute('class', 'box');
-				boxNode.setAttribute('href', hrefItem(item));
-
-				boxNode.appendChild(titleNode);
-				boxNode.appendChild(contentNode);
-
-				return boxNode;
-			}
-
-			function createTitle(item) {
-
-				var titleNode = document.getElementById("title"),
-					node = document.createElement("h1"),
-					content = document.createTextNode(configBox.title || '');
-
-				node.appendChild(content);
-				titleNode.appendChild(node);
-			}
-
-			function createContent() {
-
-				createTitle();
-
-				var items = configBox.items,
-					boxContainerNode = document.getElementById("boxContainer");
-
-				for (var i = 0; i < items.length; i++) {
-					boxContainerNode.appendChild(createItemBox(items[i]));
-				}
-			}
-		</script>
+		<script type="text/javascript" language="javascript" src="index.js"></script>
 	</head>
-	<body onload="createContent()">
+	<body onload="createContent(config)">
 		<div class="page-title" id="title"></div>
 		<div class="box-container" id="boxContainer"></div>
 	</body>
