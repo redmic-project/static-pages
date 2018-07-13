@@ -1,7 +1,7 @@
 var config = {
 	"domain": "redmic.net",
 	"protocol": "https",
-	"resourcesPath": "resources/",
+	"resourcesPath": "oagdev/resources/",
 	"title": "Bienvenido a OAGdev",
 	"items": [{
 		"subdomain": "appdev",
