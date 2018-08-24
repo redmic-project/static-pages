@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+  static-pages:
+    image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
+    networks:
+      - redmic-net
+    healthcheck:
+      test: wget --spider -S -t 3 http://localhost
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
+
+networks:
+  redmic-net:
+    external: true

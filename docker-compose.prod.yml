@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  static-pages:
+    networks:
+      - traefik-net
+    deploy:
+      mode: global
+      labels:
+        traefik.port: "80"
+        traefik.docker.network: traefik-net
+        traefik.frontend.rule: Host:static.${PUBLIC_HOSTNAME}
+        traefik.backend: static-pages
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        window: 2m
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 100M
+        reservations:
+          memory: 50M
+
+networks:
+  traefik-net:
+    external: true
