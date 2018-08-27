@@ -9,7 +9,6 @@ services:
       labels:
         traefik.port: "${INTERNAL_PORT}"
         traefik.docker.network: traefik-net
-        traefik.frontend.rule: Host:static.${PUBLIC_HOSTNAME}
         traefik.backend: static-pages
       restart_policy:
         condition: on-failure
