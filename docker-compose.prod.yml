@@ -10,6 +10,10 @@ services:
         traefik.port: "${INTERNAL_PORT}"
         traefik.docker.network: traefik-net
         traefik.frontend.rule: Host:static.${PUBLIC_HOSTNAME}
+        traefik.error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME}
+        traefik.error-handle.frontend.priority: "0"
+        traefik.error-handle.frontend.redirect.regex: "^.*$"
+        traefik.error-handle.frontend.redirect.replacement: "/50x"
         traefik.backend: static-pages
       restart_policy:
         condition: on-failure
