@@ -7,14 +7,14 @@ services:
     deploy:
       mode: global
       labels:
-        traefik.port: "${INTERNAL_PORT}"
         traefik.docker.network: traefik-net
-        traefik.frontend.rule: Host:static.${PUBLIC_HOSTNAME}
-        traefik.error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME}
-        traefik.error-handle.frontend.priority: "0"
-        traefik.error-handle.frontend.redirect.regex: "^.*"
-        traefik.error-handle.frontend.redirect.replacement: "/50x"
-        traefik.backend: static-pages
+        traefik.static.port: "${INTERNAL_PORT}"
+        traefik.static.frontend.rule: Host:${STATIC_SUBDOMAIN}.${PUBLIC_HOSTNAME}
+        traefik.static.backend: static-pages
+        traefik.error-handle.port: "${INTERNAL_PORT}"
+        traefik.error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME};PathPrefixStripRegex:/{.*};AddPrefix:/50x/
+        traefik.error-handle.frontend.priority: "1"
+        traefik.error-handle.backend: static-pages
       restart_policy:
         condition: on-failure
         delay: 30s
@@ -24,7 +24,7 @@ services:
           cpus: '0.1'
           memory: 100M
         reservations:
-          memory: 50M
+          memory: 10M
 
 networks:
   traefik-net:
