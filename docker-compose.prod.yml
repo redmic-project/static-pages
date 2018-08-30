@@ -12,7 +12,7 @@ services:
         traefik.static.frontend.rule: Host:${STATIC_SUBDOMAIN}.${PUBLIC_HOSTNAME}
         traefik.static.backend: static-pages
         traefik.web-error-handle.port: "${INTERNAL_PORT}"
-        traefik.web-error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME};ReplacePathRegex:^.*?(resources/[^/]+\\.\\w+)?$$ /50x/$$1
+        traefik.web-error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME};ReplacePathRegex:^.*?(resources/[^/]+\\.\\w+)?$$ /maintenance/$$1
         traefik.web-error-handle.frontend.priority: "1"
         traefik.web-error-handle.backend: static-pages
       restart_policy:
@@ -22,7 +22,7 @@ services:
       resources:
         limits:
           cpus: '0.1'
-          memory: 100M
+          memory: 50M
         reservations:
           memory: 10M
 
