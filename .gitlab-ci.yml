@@ -3,13 +3,16 @@ stages:
   - test-package
   - deploy
 
+image: docker:stable
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+  - docker:dind
+
 docker-build-commit-non-master-branches:
   stage: package
-  image: docker:stable
-  variables:
-    DOCKER_DRIVER: overlay2
-  services:
-    - docker:dind
   only:
     - branches
   except:
@@ -21,13 +24,9 @@ docker-build-commit-non-master-branches:
 
 docker-build-commit-master-branch:
   stage: package
-  image: docker:stable
   variables:
-    DOCKER_DRIVER: overlay2
     PARENT_IMAGE_NAME: registry.gitlab.com/redmic-project/docker/redmic-server
     PARENT_IMAGE_TAG: latest
-  services:
-    - docker:dind
   only:
     - master
   script:
@@ -37,11 +36,6 @@ docker-build-commit-master-branch:
 
 docker-tag-already-built-image:
   stage: package
-  image: docker:stable
-  variables:
-    DOCKER_DRIVER: overlay2
-  services:
-    - docker:dind
   only:
     - tags
   script:
@@ -51,12 +45,7 @@ docker-tag-already-built-image:
 
 container-scanning:
   stage: test-package
-  image: docker:stable
-  variables:
-    DOCKER_DRIVER: overlay2
   allow_failure: true
-  services:
-    - docker:stable-dind
   only:
     - branches
   script:
@@ -79,18 +68,17 @@ deploy-dev:
   stage: deploy
   image: registry.gitlab.com/redmic-project/docker/docker-deploy
   variables:
-    DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
-    SERVICE: ${CI_PROJECT_NAME}
+    STACK: ${CI_PROJECT_NAME}
+    SERVICES_TO_CHECK: ${CI_PROJECT_NAME}_${CI_PROJECT_NAME}
     IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
-  services:
-    - docker:dind
+    PUBLIC_HOSTNAME: ${DEV_PUBLIC_HOSTNAME}
   script:
     - >
       deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
-      EXTERNAL_PORT=${EXTERNAL_PORT}
+      EXTERNAL_PORT=${EXTERNAL_PORT} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
   environment:
     name: dev
   only:
@@ -101,18 +89,17 @@ deploy-supporting-branch:
   stage: deploy
   image: registry.gitlab.com/redmic-project/docker/docker-deploy
   variables:
-    DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
-    SERVICE: ${CI_PROJECT_NAME}
+    STACK: ${CI_PROJECT_NAME}
+    SERVICES_TO_CHECK: ${CI_PROJECT_NAME}_${CI_PROJECT_NAME}
     IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
-  services:
-    - docker:dind
+    PUBLIC_HOSTNAME: ${DEV_PUBLIC_HOSTNAME}
   script:
     - >
       deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
-      EXTERNAL_PORT=${EXTERNAL_PORT}
+      EXTERNAL_PORT=${EXTERNAL_PORT} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
   environment:
     name: dev
   only:
@@ -126,17 +113,13 @@ deploy-pro:
   stage: deploy
   image: registry.gitlab.com/redmic-project/docker/docker-deploy
   variables:
-    DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${PRO_SSH_REMOTE}
-    STATUS_CHECK_DELAY: '40'
     STACK: ${CI_PROJECT_NAME}
     SERVICES_TO_CHECK: ${CI_PROJECT_NAME}_${CI_PROJECT_NAME}
     IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.prod.yml
     PUBLIC_HOSTNAME: ${PRO_PUBLIC_HOSTNAME}
-  services:
-    - docker:dind
   script:
     - >
       deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}

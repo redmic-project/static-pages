@@ -2,8 +2,10 @@ version: '3.5'
 
 services:
   static-pages:
-    networks:
-      - traefik-net
+    ports:
+      - target: ${INTERNAL_PORT}
+        published: ${EXTERNAL_PORT}
+        mode: host
     deploy:
       mode: global
       labels:
@@ -16,16 +18,11 @@ services:
         traefik.web-error-handle.frontend.priority: "1"
         traefik.web-error-handle.backend: static-pages
       restart_policy:
-        condition: on-failure
         delay: 30s
-        window: 2m
+        window: 1m
       resources:
         limits:
           cpus: '0.1'
-          memory: 50M
+          memory: 64M
         reservations:
-          memory: 10M
-
-networks:
-  traefik-net:
-    external: true
+          memory: 52M
