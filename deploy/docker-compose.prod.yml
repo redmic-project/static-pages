@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+  static-pages:
+    deploy:
+      mode: global
+      labels:
+        traefik.docker.network: traefik-net
+        traefik.static.port: "${INTERNAL_PORT}"
+        traefik.static.frontend.rule: Host:${STATIC_SUBDOMAIN}.${PUBLIC_HOSTNAME}
+        traefik.static.backend: static-pages
+        traefik.web-error-handle.port: "${INTERNAL_PORT}"
+        traefik.web-error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME};ReplacePathRegex:^.*?(resources/[^/]+\\.\\w+)?$$ /maintenance/$$1
+        traefik.web-error-handle.frontend.priority: "1"
+        traefik.web-error-handle.backend: static-pages
+      restart_policy:
+        delay: 30s
+        window: 1m
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 64M
+        reservations:
+          memory: 52M

@@ -5,6 +5,7 @@ services:
     image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
     networks:
       - redmic-net
+      - traefik-net
     healthcheck:
       test: wget --spider -S -t 3 http://localhost
       interval: 30s
@@ -14,4 +15,6 @@ services:
 
 networks:
   redmic-net:
+    external: true
+  traefik-net:
     external: true
