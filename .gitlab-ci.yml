@@ -7,6 +7,11 @@ image: docker:stable
 
 variables:
   DOCKER_DRIVER: overlay2
+  STACK: ${CI_PROJECT_NAME}
+  SERVICES_TO_CHECK: ${CI_PROJECT_NAME}_${CI_PROJECT_NAME}
+  IMAGE_NAME: ${CI_REGISTRY_IMAGE}
+  IMAGE_TAG: ${CI_COMMIT_SHA}
+  STATIC_SUBDOMAIN: static
 
 services:
   - docker:dind
@@ -64,68 +69,78 @@ container-scanning:
   artifacts:
     paths: [gl-sast-container-report.json]
 
-deploy-dev:
+deploy-supporting-branch-develop:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/docker-deploy
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy:latest
   variables:
     SSH_REMOTE: ${DEV_SSH_REMOTE}
-    STACK: ${CI_PROJECT_NAME}
-    SERVICES_TO_CHECK: ${CI_PROJECT_NAME}_${CI_PROJECT_NAME}
-    IMAGE_NAME: ${CI_REGISTRY_IMAGE}
-    IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
     PUBLIC_HOSTNAME: ${DEV_PUBLIC_HOSTNAME}
   script:
     - >
       deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
-      EXTERNAL_PORT=${EXTERNAL_PORT} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
+      STATIC_SUBDOMAIN=${STATIC_SUBDOMAIN} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
   environment:
     name: dev
-  only:
-    - dev
-  when: manual
-
-deploy-supporting-branch:
-  stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/docker-deploy
-  variables:
-    SSH_REMOTE: ${DEV_SSH_REMOTE}
-    STACK: ${CI_PROJECT_NAME}
-    SERVICES_TO_CHECK: ${CI_PROJECT_NAME}_${CI_PROJECT_NAME}
-    IMAGE_NAME: ${CI_REGISTRY_IMAGE}
-    IMAGE_TAG: ${CI_COMMIT_SHA}
-    COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
-    PUBLIC_HOSTNAME: ${DEV_PUBLIC_HOSTNAME}
-  script:
-    - >
-      deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
-      EXTERNAL_PORT=${EXTERNAL_PORT} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
-  environment:
-    name: dev
+    url: https://${STATIC_SUBDOMAIN}.${DEV_PUBLIC_HOSTNAME}
   only:
     - branches
   except:
     - master
-    - dev
   when: manual
 
-deploy-pro:
+deploy-stable-branch-develop:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/docker-deploy
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy:latest
+  variables:
+    SSH_REMOTE: ${DEV_SSH_REMOTE}
+    COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
+    PUBLIC_HOSTNAME: ${DEV_PUBLIC_HOSTNAME}
+  script:
+    - >
+      deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+      STATIC_SUBDOMAIN=${STATIC_SUBDOMAIN} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
+  environment:
+    name: dev
+    url: https://${STATIC_SUBDOMAIN}.${DEV_PUBLIC_HOSTNAME}
+  only:
+    - master
+  when: manual
+
+deploy-supporting-branch-production:
+  stage: deploy
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy:latest
   variables:
     SSH_REMOTE: ${PRO_SSH_REMOTE}
-    STACK: ${CI_PROJECT_NAME}
-    SERVICES_TO_CHECK: ${CI_PROJECT_NAME}_${CI_PROJECT_NAME}
-    IMAGE_NAME: ${CI_REGISTRY_IMAGE}
-    IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.prod.yml
     PUBLIC_HOSTNAME: ${PRO_PUBLIC_HOSTNAME}
   script:
     - >
       deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
-      PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
+      STATIC_SUBDOMAIN=${STATIC_SUBDOMAIN} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
   environment:
     name: pro
+    url: https://${STATIC_SUBDOMAIN}.${PRO_PUBLIC_HOSTNAME}
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+
+deploy-stable-branch-production:
+  stage: deploy
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy:latest
+  variables:
+    SSH_REMOTE: ${PRO_SSH_REMOTE}
+    COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.prod.yml
+    PUBLIC_HOSTNAME: ${PRO_PUBLIC_HOSTNAME}
+  script:
+    - >
+      deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+      STATIC_SUBDOMAIN=${STATIC_SUBDOMAIN} PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
+  environment:
+    name: pro
+    url: https://${STATIC_SUBDOMAIN}.${PRO_PUBLIC_HOSTNAME}
   only:
     - master
   when: manual
