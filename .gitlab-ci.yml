@@ -12,7 +12,7 @@ stages:
   - deploy
 
 variables:
-  STACK: ${CI_PROJECT_NAME}
+  STACK: static-pages
 
 .deploy:
   environment:
