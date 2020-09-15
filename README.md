@@ -1,3 +1,3 @@
 # static-pages
 
-TODO
+Collection of static pages (welcome, error, etc.)

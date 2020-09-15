@@ -2,42 +2,39 @@ version: '3.5'
 
 services:
   static-pages:
-    image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
+    image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/static-pages}:${IMAGE_TAG:-latest}
+    build:
+      context: ..
+      dockerfile: ${DOCKERFILE:-Dockerfile}
+      args:
+        NGINX_IMAGE_TAG:
     networks:
       traefik-net:
-    healthcheck:
-      test: wget --spider -q http://localhost
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 1m
     deploy:
       mode: global
+      restart_policy:
+        delay: ${RESTART_DELAY:-10s}
+      update_config:
+        delay: ${UPDATE_DELAY:-1m}
       labels:
-        traefik.static.frontend.rule: Host:${STATIC_SUBDOMAIN}.${PUBLIC_HOSTNAME}
-        traefik.static.backend: ${BACKEND_NAME}
-        traefik.static.port: '${INTERNAL_PORT}'
+        traefik.static.frontend.rule: Host:${STATIC_SUBDOMAIN:-static}.${PUBLIC_HOSTNAME}
         traefik.web-error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME};ReplacePathRegex:^.*?(resources/[^/]+\\.\\w+)?$$ /maintenance/$$1
         traefik.web-error-handle.frontend.priority: '1'
-        traefik.web-error-handle.backend: ${BACKEND_NAME}
-        traefik.web-error-handle.port: '${INTERNAL_PORT}'
         traefik.old-viewer.frontend.rule: Host:www.redmic.es;PathPrefix:/flexviewers/visor
         traefik.old-viewer.frontend.redirect.regex: ^.*$$
         traefik.old-viewer.frontend.redirect.replacement: https://${PUBLIC_HOSTNAME}/atlas
-        traefik.old-viewer.backend: ${BACKEND_NAME}
-        traefik.old-viewer.port: '${INTERNAL_PORT}'
-      restart_policy:
-        delay: 5s
-        window: 1m
+        traefik.backend: ${BACKEND_NAME:-static-pages}
+        traefik.port: '${PORT:-80}'
       resources:
         limits:
-          cpus: '0.1'
-          memory: 64M
+          cpus: '${RESOURCES_LIMITS_CPUS:-0.1}'
+          memory: ${RESOURCES_LIMITS_MEMORY:-32M}
         reservations:
-          cpus: '0.001'
-          memory: 8M
+          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.001}'
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-4M}
 
 networks:
   traefik-net:
     name: ${TRAEFIK_NET_NAME:-traefik-net}
+    driver: ${TRAEFIK_NET_DRIVER:-overlay}
     external: true
