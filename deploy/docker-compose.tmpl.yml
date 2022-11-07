@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.9'
 
 services:
   static-pages:
@@ -17,14 +17,19 @@ services:
       update_config:
         delay: ${UPDATE_DELAY:-1m}
       labels:
-        traefik.static.frontend.rule: Host:${STATIC_SUBDOMAIN:-static}.${PUBLIC_HOSTNAME}
-        traefik.web-error-handle.frontend.rule: Host:${PUBLIC_HOSTNAME};ReplacePathRegex:^.*?(resources/[^/]+\\.\\w+)?$$ /maintenance/$$1
-        traefik.web-error-handle.frontend.priority: '1'
-        traefik.old-viewer.frontend.rule: Host:www.redmic.es;PathPrefix:/flexviewers/visor
-        traefik.old-viewer.frontend.redirect.regex: ^.*$$
-        traefik.old-viewer.frontend.redirect.replacement: https://${PUBLIC_HOSTNAME}/atlas
-        traefik.backend: ${BACKEND_NAME:-static-pages}
-        traefik.port: '${PORT:-80}'
+        traefik.enable: 'true'
+
+        traefik.http.routers.static-pages.entrypoints: ${TRAEFIK_ENTRYPOINT}
+        traefik.http.routers.static-pages.rule: Host(`${STATIC_SUBDOMAIN:-static}.${PUBLIC_HOSTNAME}`)
+
+        traefik.http.routers.static-pages-redmic-web-error.entrypoints: ${TRAEFIK_ENTRYPOINT}
+        traefik.http.routers.static-pages-redmic-web-error.rule: Host(`${PUBLIC_HOSTNAME}`)
+        traefik.http.middlewares.static-pages-redmic-web-error-replacepathregex.replacepathregex.regex: ^.*?(resources/[^/]+\.\w+)?$$
+        traefik.http.middlewares.static-pages-redmic-web-error-replacepathregex.replacepathregex.replacement: /maintenance/$$1
+        traefik.http.routers.static-pages-redmic-web-error.middlewares: static-pages-redmic-web-error-replacepathregex
+        traefik.http.routers.static-pages-redmic-web-error.priority: '1'
+
+        traefik.http.services.static-pages.loadbalancer.server.port: 80
       resources:
         limits:
           cpus: '${RESOURCES_LIMITS_CPUS:-0.1}'
