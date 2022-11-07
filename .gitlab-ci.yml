@@ -15,12 +15,6 @@ stages:
   - post-package
   - deploy
 
-variables:
-  PROJECT_PARENT_NAME: static-pages
-
 .deploy:
   variables:
-    STACK: ${PROJECT_PARENT_NAME}
-    SERVICES_TO_CHECK: ${PROJECT_PARENT_NAME}_${CI_PROJECT_NAME}
-  environment:
-    url: https://${DD_STATIC_SUBDOMAIN}.${PUBLIC_HOSTNAME}
+    STACK: static-pages
