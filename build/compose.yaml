@@ -1,0 +1,8 @@
+services:
+  static-pages:
+    image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/static-pages}:${IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE:-Dockerfile}
+      args:
+        NGINX_IMAGE_TAG:
