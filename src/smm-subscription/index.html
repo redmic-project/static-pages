@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suscripción SMM Canarias</title>
+
+<style>
+:root{
+    --primary:#006699;
+    --secondary:#00a6d6;
+    --accent:#00c389;
+    --light:#f4f9fb;
+    --dark:#12344a;
+    --text:#2c3e50;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:#f5f8fa;
+    color:var(--text);
+    line-height:1.6;
+}
+
+.hero{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    color:white;
+    padding:80px 20px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:1.2rem;
+    max-width:900px;
+    margin:auto;
+    opacity:0.95;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:60px 20px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.section-title h2{
+    color:var(--primary);
+    font-size:2rem;
+    margin-bottom:10px;
+}
+
+.section-title p{
+    max-width:800px;
+    margin:auto;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+    margin-top:40px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+    transition:all .3s ease;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+}
+
+.card h3{
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.card ul{
+    padding-left:20px;
+}
+
+.subscribe{
+    margin-top:70px;
+    background:white;
+    border-radius:16px;
+    padding:50px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+}
+
+.subscribe h2{
+    color:var(--primary);
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.subscribe p{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.form-wrapper{
+    max-width:650px;
+    margin:auto;
+}
+
+.notice{
+    background:#e9f8ff;
+    border-left:5px solid var(--secondary);
+    padding:15px;
+    border-radius:6px;
+    margin-bottom:25px;
+}
+
+.footer{
+    text-align:center;
+    padding:40px 20px;
+    background:var(--dark);
+    color:white;
+    margin-top:60px;
+}
+
+.highlight{
+    color:var(--accent);
+    font-weight:600;
+}
+
+@media (max-width:768px){
+    .hero h1{
+        font-size:2.2rem;
+    }
+
+    .subscribe{
+        padding:30px 20px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<section class="hero">
+    <h1>Sistema de Monitorización Marina de Canarias</h1>
+    <p>
+        Mantente informado sobre nuevas funcionalidades, actualizaciones del plugin QGIS,
+        productos oceanográficos, análisis climáticos marinos y recursos desarrollados
+        para la comunidad científica, técnica y de gestión del medio marino de Canarias.
+    </p>
+</section>
+
+<div class="container">
+
+    <div class="section-title">
+        <h2>¿Qué recibirás?</h2>
+        <p>
+            Suscríbete para recibir información sobre las herramientas y productos
+            generados por el Sistema de Monitorización Marina (SMM), incluyendo
+            novedades, publicaciones, actualizaciones y materiales divulgativos.
+        </p>
+    </div>
+
+    <div class="features">
+
+        <div class="card">
+            <h3>🌊 Plugin QGIS SMM</h3>
+            <p>
+                Accede a información oceanográfica operacional del entorno marino
+                de Canarias directamente desde QGIS.
+            </p>
+
+            <ul>
+                <li>Condiciones oceanográficas en tiempo real.</li>
+                <li>Integración directa en proyectos GIS.</li>
+                <li>Datos orientados a investigación y gestión marina.</li>
+                <li>Actualizaciones y nuevas funcionalidades del plugin.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>📈 Históricos y análisis térmico</h3>
+            <p>
+                Consulta y explota información histórica de temperatura superficial del mar.
+            </p>
+
+            <ul>
+                <li>Promedios anuales, mensuales y semanales.</li>
+                <li>Anomalías de temperatura superficial.</li>
+                <li>Series temporales desde 1982.</li>
+                <li>Análisis descriptivos y tendencias climáticas.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🪸 Refugios climáticos marinos</h3>
+            <p>
+                Herramienta de apoyo a expertos en especies y ecosistemas marinos vulnerables.
+            </p>
+
+            <ul>
+                <li>Análisis del contexto térmico marino de Canarias.</li>
+                <li>Inventario de eventos de olas de calor marinas.</li>
+                <li>Bloques anuales resumen y estadísticas asociadas.</li>
+                <li>Información para la evaluación de posibles refugios climáticos.</li>
+            </ul>
+        </div>
+
+    </div>
+
+        <section class="subscribe">
+
+        <h2>Suscripción a la lista de distribución</h2>
+
+        <p>
+            Recibe información periódica sobre el <span class="highlight">Sistema de Monitorización Marina</span>,
+            nuevas versiones del plugin, materiales técnicos, jornadas, resultados y recursos
+            relacionados con la observación y el seguimiento del medio marino de Canarias.
+        </p>
+
+        <div class="form-wrapper">
+
+            <div class="notice">
+                La suscripción es gratuita. Podrás darte de baja en cualquier momento desde
+                los enlaces incluidos en cada comunicación.
+            </div>
+
+            <!-- FORMULARIO LISTMONK -->
+            <!-- Sustituir ACTION por la URL de suscripción de Listmonk -->
+
+            <form method="post" action="https://listmonk.normap.org/subscription/form" target="_blank">
+
+                <label for="name"><strong>Nombre</strong></label><br>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    style="width:100%;padding:12px;margin:8px 0 18px 0;border:1px solid #ccc;border-radius:6px;"
+                >
+
+                <label for="email"><strong>Correo electrónico</strong></label><br>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    style="width:100%;padding:12px;margin:8px 0 18px 0;border:1px solid #ccc;border-radius:6px;"
+                >
+
+                <input type="hidden" name="l" value="6ed1cd74-febe-4e8e-8143-6acbb187c0ce">
+
+                <label>
+                    <input type="checkbox" required>
+                    Acepto el tratamiento de mis datos para el envío de comunicaciones relacionadas con el Sistema de Monitorización Marina.
+                </label>
+
+                <br><br>
+
+                <button
+                    type="submit"
+                    style="
+                        background:#00c389;
+                        color:white;
+                        border:none;
+                        padding:14px 28px;
+                        border-radius:6px;
+                        font-size:1rem;
+                        cursor:pointer;
+                        width:100%;
+                        font-weight:600;
+                    ">
+                    Suscribirme
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+<footer class="footer">
+
+    <div style="margin-bottom:25px;">
+        <img
+            src="resources/gobcan-logos.png"
+            alt="Logos institucionales"
+            style="
+                max-width:100%;
+                width:900px;
+                height:auto;
+                padding:15px;
+                border-radius:8px;
+            "
+        >
+    </div>
+
+    <p style="font-size:1.1rem;font-weight:600;">
+        Sistema de Monitorización Marina de Canarias (SMM)
+    </p>
+
+    <p style="max-width:900px;margin:10px auto 0;">
+        Información oceanográfica, análisis climático marino y herramientas para la gestión
+        sostenible del medio marino de Canarias.
+    </p>
+
+</footer>
+
+</body>
+</html>
+
+
