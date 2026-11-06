@@ -3,6 +3,8 @@ services:
     image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/static-pages}:${IMAGE_TAG:-latest}
     networks:
       traefik-net:
+    healthcheck:
+      disable: ${HEALTHCHECK_DISABLE:-false}
     deploy:
       mode: global
       restart_policy:
@@ -22,6 +24,9 @@ services:
         traefik.http.middlewares.static-pages-ecomarcan-replacepathregex.replacepathregex.replacement: /maintenance/$$1
         traefik.http.routers.static-pages-ecomarcan-replacement.middlewares: static-pages-ecomarcan-replacepathregex
         traefik.http.routers.static-pages-ecomarcan-replacement.priority: '1'
+
+        traefik.http.routers.static-pages-smm-subscription.entrypoints: ${TRAEFIK_ENTRYPOINT}
+        traefik.http.routers.static-pages-smm-subscription.rule: Host(`${PUBLIC_HOSTNAME}`) && PathPrefix(`/smm-subscription`)
       resources:
         limits:
           cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
@@ -33,5 +38,4 @@ services:
 networks:
   traefik-net:
     name: ${TRAEFIK_NET_NAME:-traefik-net}
-    driver: ${TRAEFIK_NET_DRIVER:-overlay}
     external: true
