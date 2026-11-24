@@ -232,10 +232,10 @@ body{
                 los enlaces incluidos en cada comunicación.
             </div>
 
-            <!-- FORMULARIO LISTMONK -->
-            <!-- Sustituir ACTION por la URL de suscripción de Listmonk -->
+            <form method="post" action="https://listmonk.devops.grafcan.es/subscription/form" target="_blank">
 
-            <form method="post" action="https://listmonk.normap.org/subscription/form" target="_blank">
+                <input type="hidden" name="nonce" />
+                <input type="hidden" name="next" value="https://ecomarcan.org" />
 
                 <label for="name"><strong>Nombre</strong></label><br>
                 <input
@@ -255,12 +255,17 @@ body{
                     style="width:100%;padding:12px;margin:8px 0 18px 0;border:1px solid #ccc;border-radius:6px;"
                 >
 
-                <input type="hidden" name="l" value="6ed1cd74-febe-4e8e-8143-6acbb187c0ce">
+                <input type="hidden" name="l" value="1d8f771d-84a1-42e6-ab56-260a52de4eaf">
 
                 <label>
                     <input type="checkbox" required>
                     Acepto el tratamiento de mis datos para el envío de comunicaciones relacionadas con el Sistema de Monitorización Marina.
                 </label>
+
+                <br><br>
+
+                <altcha-widget challenge="https://listmonk.devops.grafcan.es/api/public/captcha/altcha"></altcha-widget>
+                <script type="module" src="https://listmonk.devops.grafcan.es/public/static/altcha.umd.js" async defer></script>
 
                 <br><br>
 
